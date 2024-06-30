@@ -20,8 +20,12 @@
     margin-bottom: 100px;
 }
 
-#city-name {
+#city-input {
     border: none;
+}
+
+#city-input:focus {
+    outline: none;
 }
 
 #submit-btn {

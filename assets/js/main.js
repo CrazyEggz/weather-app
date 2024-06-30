@@ -9,8 +9,27 @@ const cityInputEle = document.getElementById("city-input");
 const submitBtnEle = document.getElementById("submit-btn");
 const forcastArea = document.getElementById("forcast-container");
 
-const apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${apiKey}&units=${units}`;
+submitBtnEle.addEventListener("click", handleBtnClick);
 
-fetch(apiURL)
-    .then(response => response.json())
-    .then(data => console.log(data));
+function handleBtnClick() {
+    const cityName = cityInputEle.value;
+    const apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=${units}`;
+
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            cityNameEle.innerText = data.city.name;
+            
+            currentConditionEle.innerText = data.list[0].weather[0].main;
+
+            const currentConditionImgCode = data.list[0].weather[0].icon;
+            currentConditionImgSrc = `https://openweathermap.org/img/wn/${currentConditionImgCode}@2x.png`;
+            currentConditionImgEle.src = currentConditionImgSrc;
+
+            currentTempEle.innerText = Math.round(data.list[0].main.temp);
+
+        });
+        
+}
